@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1080" fill="none">
+  <defs>
+    <pattern id="paper" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="2" cy="3" r=".6" fill="#b5aa95" opacity=".16"/></pattern>
+    <pattern id="linen" width="7" height="7" patternUnits="userSpaceOnUse"><path d="M0 2h7M2 0v7" stroke="#bdae93" stroke-width=".5" opacity=".38"/></pattern>
+    <linearGradient id="cloth" x1="160" y1="320" x2="540" y2="780" gradientUnits="userSpaceOnUse"><stop stop-color="#eee3ce"/><stop offset="1" stop-color="#d0b891"/></linearGradient>
+    <filter id="shadow" x="-40%" width="180%" y="-30%" height="180%"><feDropShadow dx="0" dy="17" stdDeviation="20" flood-color="#6e5d44" flood-opacity=".13"/></filter>
+  </defs>
+  <rect width="720" height="1080" fill="#f4efe5"/><rect width="720" height="1080" fill="url(#paper)"/>
+  <rect x="40" y="42" width="640" height="996" rx="18" stroke="#d9cdbb"/>
+  <path d="M92 157h536M92 922h536M360 198v670" stroke="#d9cdbb" stroke-dasharray="4 9"/>
+  <text x="94" y="113" fill="#627355" font-family="Arial,sans-serif" font-size="15" font-weight="700" letter-spacing="4">ATELIER / ÉTUDE DE COUPE</text>
+  <text x="94" y="980" fill="#4d5945" font-family="Georgia,serif" font-size="31">Le col officier</text>
+  <text x="94" y="1009" fill="#93856e" font-family="Arial,sans-serif" font-size="13" letter-spacing="2">LIN • PATTE CENTRALE • POIGNETS</text>
+  <g filter="url(#shadow)" stroke="#7f7159" stroke-width="2.2" stroke-linejoin="round">
+    <path d="m304 287-61 27-87 35-82 324 62 23 98-220 7 292q119 67 238 0l7-292 98 220 62-23-82-324-87-35-61-27z" fill="url(#cloth)"/>
+    <path d="m304 287-61 27-87 35-82 324 62 23 98-220 7 292q119 67 238 0l7-292 98 220 62-23-82-324-87-35-61-27z" fill="url(#linen)" stroke="none"/>
+    <path d="M305 270q54 32 110 0v43q-54 30-110 0z" fill="#ddd0b8"/>
+    <path d="M350 291h20v510h-20z" fill="#e9dbc1"/>
+    <path d="m79 655 65 24-7 28-64-24zm497 24 65-24 6 28-64 24z" fill="#e3d4b7"/>
+    <path d="M249 327q-25 82-14 145M471 327q25 82 14 145M249 756q107 57 222 0" stroke-dasharray="3 5"/>
+    <path d="m254 476-10 227m222-227 10 227M149 431l-41 182M571 431l41 182" stroke="#b3a184" stroke-width="1.4"/>
+    <path d="M403 383h50v66q-25 20-50 0z" stroke="#a79579" stroke-width="1.5"/>
+    <g fill="#957f5b" stroke="none"><circle cx="360" cy="335" r="3"/><circle cx="360" cy="401" r="3"/><circle cx="360" cy="467" r="3"/><circle cx="360" cy="533" r="3"/><circle cx="360" cy="599" r="3"/><circle cx="360" cy="665" r="3"/><circle cx="360" cy="731" r="3"/></g>
+  </g>
+  <g stroke="#758962" stroke-width="1.6"><path d="M413 283h82l43-35"/><path d="M140 691H93l-17 30"/><circle cx="414" cy="284" r="4" fill="#758962"/></g>
+  <g fill="#667759" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1"><text x="508" y="233">COL DROIT</text><text x="60" y="746">POIGNET</text></g>
+</svg>

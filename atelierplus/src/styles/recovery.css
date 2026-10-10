@@ -1,0 +1,248 @@
+/*
+ * Password recovery, recovery codes and the team security panel.
+ * Kept apart from globals.css so the feature can be read and changed on its own.
+ */
+
+.forgot-link {
+  display: inline-flex;
+  align-self: flex-end;
+  margin-top: -6px;
+  padding: 6px 2px;
+  color: #3f6218;
+  font-size: 16px;
+  font-weight: 900;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Page shell */
+.recover-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px 20px;
+  background: #f5f7f0;
+}
+
+.recover-card {
+  width: 100%;
+  max-width: 580px;
+  padding: 36px 32px;
+  border: 1px solid #e3e9d8;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 24px 60px rgba(35, 50, 38, 0.1);
+  animation: copy-enter 0.5s cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.recover-kicker { margin: 0; color: #5c7a2b; font-size: 14px; font-weight: 900; letter-spacing: 1.6px; }
+
+.recover-card h1 {
+  margin: 12px 0 12px;
+  color: #1f2c22;
+  font-size: clamp(32px, 5vw, 42px);
+  font-weight: 900;
+  letter-spacing: -0.8px;
+  line-height: 1.12;
+}
+
+.recover-lead { margin: 0 0 24px; color: #3f4d41; font-size: 18px; font-weight: 700; line-height: 1.6; }
+
+/* Choice cards */
+.recover-choices { display: grid; gap: 14px; }
+
+.recover-choice {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 20px;
+  border: 2px solid #dfe7d0;
+  border-radius: 18px;
+  background: #fbfdf8;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+}
+
+.recover-choice:hover { border-color: #9dc05e; background: #f3f9e8; transform: translateY(-1px); }
+
+.recover-choice-icon {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  flex: 0 0 auto;
+  border-radius: 16px;
+  background: #e6f1cf;
+  font-size: 28px;
+}
+
+.recover-choice strong { display: block; color: #1f2c22; font-size: 20px; font-weight: 900; }
+.recover-choice small { display: block; margin-top: 4px; color: #4f5e51; font-size: 16px; font-weight: 700; line-height: 1.45; }
+
+.recover-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: #2f4438;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.6px;
+  vertical-align: middle;
+}
+
+/* Forms */
+.recover-form { display: flex; flex-direction: column; gap: 18px; margin-top: 24px; }
+.recover-form .field-label { font-size: 17px; font-weight: 900; gap: 8px; }
+.recover-form .field-label input { min-height: 60px; font-size: 19px; font-weight: 800; }
+
+.recover-code-input {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.recover-otp-input {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 30px !important;
+  letter-spacing: 12px;
+  text-align: center;
+}
+
+.recover-hint {
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #f3f7ea;
+  color: #3f4d41;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.recover-error {
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #fdf0ea;
+  color: #8f4129;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.recover-actions { display: flex; flex-direction: column; gap: 12px; margin-top: 6px; }
+.recover-actions .button { width: 100%; min-height: 62px; font-size: 19px; font-weight: 900; }
+
+.recover-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 8px 0;
+  border: 0;
+  background: none;
+  color: #3f6218;
+  font-size: 17px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.recover-login-link { margin-top: 18px; color: #3f4d41; font-size: 16px; font-weight: 700; text-align: center; }
+.recover-login-link a { color: #3f6218; font-weight: 900; text-decoration: underline; }
+
+/* Recovery code card, shown once */
+.recovery-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 22px;
+  padding: 22px;
+  border: 2px dashed #9dc05e;
+  border-radius: 20px;
+  background: #f7fbef;
+  text-align: center;
+}
+
+.recovery-kicker { margin: 0; color: #4f6f20; font-size: 14px; font-weight: 900; letter-spacing: 1.6px; }
+.recovery-title { margin: 0; color: #1f2c22; font-size: 22px; font-weight: 900; }
+.recovery-note { margin: 0; color: #3f4d41; font-size: 16px; font-weight: 700; line-height: 1.55; }
+
+.recovery-code {
+  padding: 18px 12px;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: inset 0 0 0 1px #d6e6b8;
+  color: #1f2c22;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: clamp(24px, 6vw, 34px);
+  font-weight: 900;
+  letter-spacing: 4px;
+  user-select: all;
+  word-break: break-all;
+}
+
+.recovery-copy { width: 100%; min-height: 56px; font-size: 17px; font-weight: 900; }
+
+/* Team security panel (patron) */
+.security-panel { margin-bottom: 15px; }
+.security-block { display: flex; flex-direction: column; gap: 14px; padding: 6px 19px 20px; }
+.security-block + .security-block { padding-top: 18px; border-top: 1px solid #eef1e8; }
+.security-block h3 { margin: 0; color: #1f2c22; font-size: 19px; font-weight: 900; }
+.security-block > p { margin: 0; color: #3f4d41; font-size: 16px; font-weight: 700; line-height: 1.55; }
+.security-empty { padding: 14px 16px; border-radius: 14px; background: #f7f9f3; color: #3f4d41; font-size: 16px; font-weight: 700; }
+
+.request-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 1.5px solid #e4ead9;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.request-row > div:first-child { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.request-row b { color: #1f2c22; font-size: 18px; font-weight: 900; }
+.request-row span { color: #3f4d41; font-size: 15px; font-weight: 700; }
+.request-row small { color: #3f6218; font-size: 14px; font-weight: 800; }
+
+.request-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+.request-actions .button { min-height: 48px; font-size: 16px; font-weight: 900; }
+
+.patron-code {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 18px;
+  border-radius: 16px;
+  background: #f3f8ea;
+  text-align: center;
+}
+
+.patron-code small { color: #3f6218; font-size: 16px; font-weight: 900; }
+
+.patron-code strong {
+  color: #1f2c22;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 46px;
+  font-weight: 900;
+  letter-spacing: 10px;
+}
+
+.patron-code span { color: #3f4d41; font-size: 15px; font-weight: 700; }
+
+@media (max-width: 560px) {
+  .recover-card { padding: 26px 20px; }
+  .recover-choice { padding: 16px; }
+  .request-row { grid-template-columns: 1fr; }
+  .request-actions { justify-content: stretch; }
+  .request-actions .button { flex: 1; }
+}

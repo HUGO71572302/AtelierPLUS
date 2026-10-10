@@ -1,0 +1,167 @@
+/*
+ * Readability layer.
+ * Loaded after globals.css. It only sets tokens and overrides, so the design
+ * stays in one place: change a value here and it applies to the whole app.
+ */
+
+:root {
+  --text-base: 17px;
+  --text-small: 14px;
+  --text-strong: #15201a;
+  --text-muted: #3f4d41;
+  --tap-min: 52px;
+  --focus-ring: #5f8a2a;
+}
+
+html { font-size: 17px; }
+
+body {
+  font-size: var(--text-base);
+  font-weight: 600;
+  line-height: 1.55;
+  letter-spacing: 0.1px;
+  color: var(--text-strong);
+}
+
+:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 3px; }
+
+/* Headings and labels */
+.eyebrow { font-size: var(--text-small); font-weight: 900; letter-spacing: 1.2px; }
+.nav-caption { font-size: 13px; font-weight: 900; }
+.page-heading-row h1 { font-size: clamp(32px, 3.6vw, 44px); font-weight: 900; letter-spacing: -1px; }
+.page-subtitle { font-size: 17px; font-weight: 700; color: var(--text-muted); }
+.panel-heading h2 { font-size: 22px; font-weight: 900; }
+.modal-heading h2 { font-size: 28px; font-weight: 900; }
+.modal-heading p { font-size: 16px; font-weight: 700; color: var(--text-muted); }
+.empty-state h3 { font-size: 24px; font-weight: 900; }
+.empty-state p { font-size: 17px; font-weight: 700; }
+
+/* Navigation */
+.nav-link { font-size: 17px; font-weight: 800; min-height: 52px; }
+.nav-count { font-size: 14px; min-width: 26px; height: 24px; }
+.workspace-switcher b { font-size: 16px; font-weight: 900; }
+.workspace-switcher small { font-size: 14px; font-weight: 700; }
+.topbar-breadcrumb { font-size: 15px; font-weight: 700; }
+.search-box input { font-size: 16px; font-weight: 700; }
+.topbar-tool-btn, .topbar-team-btn { font-size: 15px; font-weight: 900; min-height: 42px; }
+.sync-chip { font-size: 14px; font-weight: 900; min-height: 40px; }
+
+/* Buttons: large, bold, easy to tap */
+.button { min-height: var(--tap-min); font-size: 17px; font-weight: 900; padding: 0 20px; }
+.button-sm { min-height: 46px; font-size: 15px; font-weight: 900; }
+.form-actions .button { min-height: 52px; font-size: 17px; }
+
+/* Forms */
+.field-label { font-size: 16px; font-weight: 800; gap: 10px; }
+.field-label input, .field-label select { min-height: 56px; font-size: 18px; font-weight: 700; }
+.field-label textarea { min-height: 104px; font-size: 18px; font-weight: 600; }
+.app-form .field-label input, .app-form .field-label select, .app-form .field-label textarea { font-size: 18px; min-height: 56px; }
+.field-hint, .form-tip { font-size: 15px; font-weight: 700; }
+.form-error { font-size: 16px; font-weight: 800; padding: 14px 16px; }
+.auth-form-wrap > h2 { font-size: 40px; font-weight: 900; }
+.auth-intro { font-size: 17px; font-weight: 700; color: var(--text-muted); }
+.auth-switch { font-size: 16px; font-weight: 700; }
+.auth-switch button, .text-link { font-size: 16px; font-weight: 900; }
+
+/* Dashboard and lists */
+.metric-label { font-size: 15px; font-weight: 800; }
+.metric-value { font-size: clamp(24px, 2.4vw, 30px); font-weight: 900; }
+.metric-note { font-size: 15px; font-weight: 700; }
+.order-code b, .order-garment b, .order-balance b, .order-delivery b { font-size: 17px; font-weight: 900; }
+.order-code small, .order-garment small, .order-balance small, .order-delivery small, .order-balance span { font-size: 14px; font-weight: 700; }
+.status-pill { font-size: 14px; font-weight: 900; min-height: 32px; padding: 0 12px; }
+.delivery-copy b { font-size: 17px; font-weight: 900; }
+.delivery-copy small { font-size: 14px; font-weight: 700; }
+.delivery-date b { font-size: 17px; font-weight: 900; }
+.delivery-all, .tip-card > button, .panel-footer .text-link, .panel-heading > .text-link { font-size: 16px; font-weight: 900; }
+.tip-card h3 { font-size: 22px; font-weight: 900; }
+.tip-card p { font-size: 16px; font-weight: 700; max-width: 300px; }
+.filter-tabs button { font-size: 15px; font-weight: 800; min-height: 40px; padding: 0 12px; }
+.result-count { font-size: 17px; font-weight: 900; }
+.result-count b { font-size: 22px; }
+.list-toolbar > div:first-child > small { font-size: 15px; font-weight: 700; }
+.orders-list-page-heading { font-size: 13px; font-weight: 900; }
+.chip-toggle { font-size: 15px; font-weight: 800; min-height: 40px; padding: 8px 14px; }
+
+.client-card h3 { font-size: 21px; font-weight: 900; }
+.client-phone, .client-card-meta, .client-due { font-size: 15px; font-weight: 700; }
+.client-add-card > b { font-size: 18px; font-weight: 900; }
+.client-add-card > small { font-size: 15px; font-weight: 700; }
+
+.expense-summary-strip small { font-size: 14px; font-weight: 900; }
+.expense-summary-strip b { font-size: 26px; font-weight: 900; }
+.expense-description b { font-size: 17px; font-weight: 900; }
+.expense-description small { font-size: 14px; font-weight: 700; }
+.expense-date { font-size: 15px; font-weight: 700; }
+.expense-amount { font-size: 17px; font-weight: 900; }
+
+.team-row-copy b { font-size: 17px; font-weight: 900; }
+.team-row-copy > span { font-size: 15px; font-weight: 700; }
+.role-badge { font-size: 14px; font-weight: 900; padding: 6px 10px; }
+.team-total { font-size: 14px; font-weight: 900; }
+.access-row b { font-size: 17px; font-weight: 900; }
+.access-row small { font-size: 15px; font-weight: 700; }
+.access-lock { font-size: 15px; font-weight: 800; }
+.team-access-card h3 { font-size: 28px; font-weight: 900; }
+
+.conflict-banner b { font-size: 17px; font-weight: 900; }
+.conflict-banner p { font-size: 15px; font-weight: 700; }
+.page-footer { font-size: 15px; font-weight: 700; }
+.toast { font-size: 16px; font-weight: 800; }
+
+/* Share sheet, receipts and invitations */
+.receipt-paper pre { font-size: 16px; line-height: 1.8; font-weight: 700; }
+.share-tip, .share-banner-help { font-size: 16px; font-weight: 700; }
+.share-btn-primary, .share-btn-whatsapp-app { font-size: 17px; min-height: 56px; font-weight: 900; }
+.share-btn-secondary { font-size: 16px; min-height: 52px; font-weight: 900; }
+.invite-intro { font-size: 16px; font-weight: 700; }
+.invite-list > b { font-size: 17px; font-weight: 900; }
+.invite-row { font-size: 16px; font-weight: 700; }
+.invite-row .text-link { font-size: 16px; font-weight: 900; }
+
+/* Measurement guide and order sheet */
+.guide-cat-btn { font-size: 15px; font-weight: 900; min-height: 44px; padding: 8px 16px; }
+.guide-card-top strong { font-size: 17px; font-weight: 900; }
+.guide-hint-text { font-size: 15px; font-weight: 700; }
+.guide-garment-pills span { font-size: 13px; font-weight: 800; }
+.active-measure-callout strong { font-size: 18px; font-weight: 900; }
+.active-measure-callout p { font-size: 16px; font-weight: 700; }
+.step-label { font-size: 14px; font-weight: 900; }
+.step-circle { width: 32px; height: 32px; font-size: 14px; }
+.section-head h4 { font-size: 20px; font-weight: 900; }
+.confection-table th { font-size: 13px; font-weight: 900; }
+.confection-table td { font-size: 16px; font-weight: 800; }
+.sheet-strip-item strong { font-size: 22px; font-weight: 900; }
+.sheet-strip-item span, .sheet-strip-item small { font-size: 14px; font-weight: 800; }
+.order-sheet-title { font-size: 28px; font-weight: 900; }
+.order-sheet-meta { font-size: 16px; font-weight: 700; }
+.order-notes-box { font-size: 16px; font-weight: 700; }
+.ledger-details strong { font-size: 18px; font-weight: 900; }
+.ledger-details small { font-size: 15px; font-weight: 700; }
+.no-data-notice { font-size: 16px; font-weight: 800; }
+
+/* Mobile bottom navigation: short labels, still bold and readable */
+.mobile-bottom-nav button { font-size: 13px; font-weight: 900; }
+.mobile-bottom-nav button span { font-size: 13px; font-weight: 900; }
+.mobile-bottom-nav button svg { width: 26px; height: 26px; }
+
+/* Let larger text wrap inside grid cells, never expand the mobile viewport. */
+.dashboard-grid > *, .dashboard-side > * { min-width: 0; }
+@media (max-width: 1000px) {
+  .dashboard-grid { grid-template-columns: minmax(0, 1fr); }
+  .dashboard-side { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 480px) { .dashboard-side { grid-template-columns: minmax(0, 1fr); } }
+
+@media (max-width: 760px) {
+  .panel-footer { flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; }
+  .panel-heading { flex-wrap: wrap; }
+  body { font-size: 16px; }
+  .page-heading-row h1 { font-size: 30px; }
+  .metric-label { font-size: 13px; }
+  .metric-value { font-size: 24px; }
+  .metric-note { font-size: 13px; }
+  .order-code b, .order-garment b, .order-balance b { font-size: 16px; }
+  .client-card h3 { font-size: 19px; }
+  .button { font-size: 16px; padding: 0 16px; }
+}

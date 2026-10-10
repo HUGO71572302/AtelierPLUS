@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1080" fill="none">
+  <defs>
+    <pattern id="silkWeave" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M0 3h6M3 0v6" stroke="#e3b7b0" stroke-width=".55" opacity=".42"/></pattern>
+    <pattern id="pearls" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="1.1" fill="#fdf3e7"/><circle cx="12" cy="12" r="1.1" fill="#fdf3e7"/></pattern>
+    <linearGradient id="blush" x1="160" y1="300" x2="568" y2="846" gradientUnits="userSpaceOnUse"><stop stop-color="#f6d8d2"/><stop offset="1" stop-color="#d9a196"/></linearGradient>
+    <pattern id="paper" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="3" cy="2" r=".6" fill="#ab9c88" opacity=".15"/></pattern>
+    <filter id="drop" x="-25%" y="-25%" width="160%" height="170%"><feDropShadow dy="13" stdDeviation="15" flood-color="#6d4340" flood-opacity=".13"/></filter>
+  </defs>
+  <rect width="720" height="1080" fill="#f7f0e8"/><rect width="720" height="1080" fill="url(#paper)"/>
+  <rect x="40" y="42" width="640" height="996" rx="18" stroke="#e0d2c2"/>
+  <path d="M92 157h536M92 922h536M360 198v672" stroke="#e0d2c2" stroke-dasharray="4 9"/>
+  <text x="94" y="113" fill="#a4636b" font-family="Arial,sans-serif" font-size="15" font-weight="700" letter-spacing="4">ATELIER / ÉTUDE DE COUPE</text>
+  <text x="94" y="980" fill="#7d4b4e" font-family="Georgia,serif" font-size="31">Le caftan perlé</text>
+  <text x="94" y="1009" fill="#93856e" font-family="Arial,sans-serif" font-size="13" letter-spacing="2">SATIN • PERLES • FENTE LATÉRALE</text>
+  <g stroke="#a9776f" stroke-width="2.2" stroke-linejoin="round" filter="url(#drop)">
+    <path d="M232 274h256l116 512q-116 44-244 44t-244-44z" fill="url(#blush)"/>
+    <path d="M232 274h256l14 62q-142 40-284 0z" fill="#f0c7c0"/>
+    <path d="M232 274h256l14 62q-142 40-284 0z" fill="url(#pearls)" stroke="none"/>
+    <path d="m238 340-22 444M482 340l22 444" stroke="#f2d8d2" stroke-width="3" opacity=".6"/>
+    <path d="m268 368-9 408M452 368l9 408" stroke="#b8837b" stroke-width="1.4"/>
+    <path d="M242 706q118 34 236 0" stroke-dasharray="3 5"/>
+    <path d="M348 258q12 26 12 44M372 258q-12 26-12 44" stroke="#c9938b" stroke-width="1.6"/>
+    <circle cx="360" cy="250" r="9" fill="#f0c7c0"/>
+  </g>
+  <g stroke="#9c5f66" stroke-width="1.5"><path d="M492 306h74l24-29"/><circle cx="492" cy="306" r="4" fill="#9c5f66"/><path d="M176 856h140M176 850v12M316 850v12"/></g>
+  <g fill="#8e555c" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1"><text x="556" y="264">ENCOLURE PERLÉE</text><text x="200" y="884">FENTE LATÉRALE</text></g>
+</svg>

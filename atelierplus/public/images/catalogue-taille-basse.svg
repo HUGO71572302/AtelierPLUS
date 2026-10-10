@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1080" fill="none">
+  <defs>
+    <pattern id="terraWax" width="36" height="36" patternUnits="userSpaceOnUse"><rect width="36" height="36" fill="#b4603f"/><path d="m18 4 11 14-11 14L7 18z" stroke="#f4e2cc" stroke-width="2"/><circle cx="18" cy="18" r="4" fill="#f4e2cc"/><path d="M0 0l7 7M29 29l7 7M0 36l7-7M29 7l7-7" stroke="#3f4b3c" stroke-width="1.3"/></pattern>
+    <pattern id="paper" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="2" cy="3" r=".6" fill="#ab9c88" opacity=".15"/></pattern>
+    <filter id="drop" x="-25%" y="-25%" width="160%" height="170%"><feDropShadow dy="12" stdDeviation="14" flood-color="#5c3823" flood-opacity=".13"/></filter>
+  </defs>
+  <rect width="720" height="1080" fill="#f6eee5"/><rect width="720" height="1080" fill="url(#paper)"/>
+  <rect x="40" y="42" width="640" height="996" rx="18" stroke="#d9cdbb"/>
+  <path d="M92 157h536M92 922h536M360 198v674" stroke="#d9cdbb" stroke-dasharray="4 9"/>
+  <text x="94" y="113" fill="#b06a44" font-family="Arial,sans-serif" font-size="15" font-weight="700" letter-spacing="4">ATELIER / ÉTUDE DE COUPE</text>
+  <text x="94" y="980" fill="#7a4426" font-family="Georgia,serif" font-size="31">La taille basse</text>
+  <text x="94" y="1009" fill="#93856e" font-family="Arial,sans-serif" font-size="13" letter-spacing="2">DEUX PIÈCES • CEINTURE BASSE • MIDI</text>
+  <g stroke="#7c4b2c" stroke-width="2.2" stroke-linejoin="round" filter="url(#drop)">
+    <path d="M286 262q74 12 148 0l26 118-38 62 6 96-160 0 6-96-38-62z" fill="#f4e2cc"/>
+    <path d="M286 262q74 12 148 0l6 30q-80 12-160 0z" fill="#e8d0b4"/>
+    <path d="M290 440h140l24 216-22 160q-72 17-144 0l-22-160z" fill="url(#terraWax)"/>
+    <path d="M290 440h140l5 26q-75 10-150 0z" fill="#8f4b2c"/>
+    <path d="m312 466-16 322M408 466l16 322" stroke="#f4e2cc" stroke-width="1.6" opacity=".6"/>
+    <path d="M361 466v330" stroke="#8f4b2c" stroke-width="1.4"/>
+    <path d="M254 528l32 18M466 528l-32 18M424 660l48 16" stroke="#7c4b2c" stroke-dasharray="3 4"/>
+    <path d="M296 262q64 30 128 0" stroke="#e8d0b4" stroke-width="3"/>
+  </g>
+  <g stroke="#a56a44" stroke-width="1.5"><path d="M432 452h72l21-29"/><circle cx="432" cy="452" r="4" fill="#a56a44"/><path d="M228 938h140M228 932v12M368 932v12"/></g>
+  <g fill="#975536" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1"><text x="509" y="410">TAILLE BASSE</text><text x="242" y="966">JUPE MIDI</text></g>
+</svg>

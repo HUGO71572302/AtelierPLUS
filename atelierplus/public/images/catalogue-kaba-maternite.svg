@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1080" fill="none">
+  <defs>
+    <linearGradient id="kaba" x1="150" y1="280" x2="580" y2="866" gradientUnits="userSpaceOnUse"><stop stop-color="#8fcebf"/><stop offset="1" stop-color="#4e9681"/></linearGradient>
+    <pattern id="kabaFold" width="42" height="10" patternUnits="userSpaceOnUse"><path d="M0 5h42" stroke="#3d7c6b" stroke-width="2" opacity=".22"/></pattern>
+    <pattern id="paper" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="3" cy="2" r=".6" fill="#ab9c88" opacity=".15"/></pattern>
+    <filter id="drop" x="-25%" y="-25%" width="160%" height="170%"><feDropShadow dy="12" stdDeviation="14" flood-color="#2f4a40" flood-opacity=".14"/></filter>
+  </defs>
+  <rect width="720" height="1080" fill="#f5f0e6"/><rect width="720" height="1080" fill="url(#paper)"/>
+  <rect x="40" y="42" width="640" height="996" rx="18" stroke="#d9cdbb"/>
+  <path d="M92 157h536M92 922h536M360 198v674" stroke="#d9cdbb" stroke-dasharray="4 9"/>
+  <text x="94" y="113" fill="#3f7a67" font-family="Arial,sans-serif" font-size="15" font-weight="700" letter-spacing="4">ATELIER / ÉTUDE DE COUPE</text>
+  <text x="94" y="980" fill="#2f5547" font-family="Georgia,serif" font-size="31">Le kaba ample</text>
+  <text x="94" y="1009" fill="#93856e" font-family="Arial,sans-serif" font-size="13" letter-spacing="2">VOLUME SOUPLE • MANCHES 3/4 • CONFORT</text>
+  <g stroke="#356a5b" stroke-width="2.2" stroke-linejoin="round" filter="url(#drop)">
+    <path d="M232 272h256l168 596q-148 46-296 46t-296-46z" fill="url(#kaba)"/>
+    <path d="M232 272h256l22 66q-150 42-300 0z" fill="#a4d6c6"/>
+    <path d="m232 272-72 62-64 214 62 20 74-232M488 272l72 62 64 214-62 20-74-232" fill="#8bc5b4"/>
+    <path d="m160 568 62 20-8 32-61-20zM560 588l-62 20 8 32 61-20z" fill="#79b8a6"/>
+    <path d="m244 392-70 226M476 392l70 226M318 430l-40 470M402 430l40 470" stroke="#7fbfae" stroke-width="1.4"/>
+    <path d="M208 848q152 40 304 0" stroke-dasharray="3 5"/>
+    <path d="M360 250v96M300 280q60 22 120 0" stroke="#a4d6c6" stroke-width="1.6"/>
+    <path d="m276 434 18 250M444 434l-18 250" stroke="#e6f2ec" stroke-width="2" opacity=".5"/>
+  </g>
+  <g stroke="#4b8a78" stroke-width="1.5"><path d="M498 320h74l24-29"/><circle cx="498" cy="320" r="4" fill="#4b8a78"/><path d="M158 918h138M158 912v12M296 912v12"/></g>
+  <g fill="#3d7161" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1"><text x="546" y="278">ÉPAULES</text><text x="172" y="948">VOLUME GÉNÉREUX</text></g>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1080" fill="none">
+  <defs>
+    <pattern id="wax" width="34" height="34" patternUnits="userSpaceOnUse"><rect width="34" height="34" fill="#64475c"/><path d="m17 3 12 14-12 14L5 17z" stroke="#d5a880" stroke-width="2"/><circle cx="17" cy="17" r="4" fill="#d5a880"/><path d="M0 0l6 6M28 28l6 6M0 34l6-6M28 6l6-6" stroke="#eee0cf" stroke-width="1.2"/></pattern>
+    <pattern id="paper" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="3" cy="2" r=".6" fill="#ad9c83" opacity=".15"/></pattern>
+    <filter id="shadow" x="-25%" y="-25%" width="160%" height="170%"><feDropShadow dy="12" stdDeviation="14" flood-color="#5d3847" flood-opacity=".12"/></filter>
+  </defs>
+  <rect width="720" height="1080" fill="#f6eee5"/><rect width="720" height="1080" fill="url(#paper)"/>
+  <rect x="40" y="42" width="640" height="996" rx="18" stroke="#d9cdbb"/>
+  <path d="M92 157h536M92 922h536M360 198v674" stroke="#d9cdbb" stroke-dasharray="4 9"/>
+  <text x="94" y="113" fill="#7c5265" font-family="Arial,sans-serif" font-size="15" font-weight="700" letter-spacing="4">ATELIER / ÉTUDE DE COUPE</text>
+  <text x="94" y="980" fill="#624554" font-family="Georgia,serif" font-size="31">L’ensemble péplum</text>
+  <text x="94" y="1009" fill="#93856e" font-family="Arial,sans-serif" font-size="13" letter-spacing="2">CORSAGE CINTRÉ • BASQUE • JUPE MIDI</text>
+  <g stroke="#523749" stroke-width="2.3" stroke-linejoin="round" filter="url(#shadow)">
+    <path d="M284 550q76 14 152 0l25 92-4 209q-97 29-194 0l-4-209z" fill="url(#wax)"/>
+    <path d="M284 550q76 14 152 0l4 25q-80 13-160 0z" fill="#533e50"/>
+    <path d="M315 255q45 44 90 0l52 22 59 145-47 17-51-90-8 88 50 62q-100 30-200 0l50-62-8-88-51 90-47-17 59-145z" fill="url(#wax)"/>
+    <path d="M315 255q45 44 90 0" stroke="#ead6b7" stroke-width="5"/>
+    <path d="M310 433q50 9 100 0v12q-50 9-100 0z" fill="#ead6b7" stroke="#9d7e60"/>
+    <path d="m300 277 25 91-15 65M420 277l-25 91 15 65" stroke="#ead6b7" stroke-width="1.8"/>
+    <path d="m325 447-22 59m57-58v66m35-67 22 59" stroke="#382432" opacity=".5" stroke-width="3"/>
+    <path d="M275 840q85 20 170 0M210 414l37 13M473 427l37-13" stroke="#e6d2b4" stroke-width="1.2" stroke-dasharray="3 4"/>
+    <path d="m300 577-7 62M420 577l7 62" stroke="#ead6b7" stroke-width="1.4"/>
+  </g>
+  <g stroke="#977181" stroke-width="1.5"><path d="M450 494h79l22-30"/><circle cx="450" cy="494" r="4" fill="#977181"/><path d="M262 687H156l-20-29"/></g>
+  <g fill="#85606f" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1"><text x="536" y="452">BASQUE</text><text x="82" y="646">JUPE DROITE</text></g>
+</svg>
