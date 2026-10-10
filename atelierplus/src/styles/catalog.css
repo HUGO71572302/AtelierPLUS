@@ -252,7 +252,7 @@
 .catalog-source .catalog-source-mark { width: 22px; height: 22px; font-size: 15px; }
 .catalog-source > svg { margin-left: auto; flex: 0 0 auto; }
 .catalog-source:hover { color: #6d3f2c; text-decoration: underline; text-underline-offset: 3px; }
-.inspiration-catalog .catalog-order-button { width: 100%; min-height: 50px; padding: 0 14px; justify-content: space-between; font-size: 14px; font-weight: 900; border-radius: 11px; background: var(--cat-action); }
+.inspiration-catalog .catalog-order-button { width: 100%; min-height: 50px; padding: 0 14px; justify-content: space-between; color: #fff; font-size: 14px; font-weight: 900; border-radius: 11px; background: var(--cat-action); }
 .inspiration-catalog .catalog-order-button:hover { background: #1a332d; }
 .inspiration-catalog .catalog-personal-photo { width: 100%; height: 100%; object-fit: cover; }
 .inspiration-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 100%; color: var(--cat-muted); background: var(--cat-wash); font-size: 34px; }
