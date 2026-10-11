@@ -166,6 +166,9 @@ test("La visionneuse agrandit une image, se ferme et navigue entre les modèles"
   const stage = viewer.locator(".lightbox-stage");
   await expect(stage.locator("img")).toBeVisible();
   await expect(viewer.locator(".lightbox-head, .lightbox-foot, .lightbox-facts")).toHaveCount(0);
+  const viewport = page.viewportSize()!;
+  const viewerBounds = await viewer.boundingBox();
+  expect(viewerBounds).toMatchObject({ x: 0, y: 0, width: viewport.width, height: viewport.height });
   const size = await stage.locator("img").boundingBox();
   expect(size!.height).toBeGreaterThan(300);
 
@@ -250,6 +253,18 @@ test("Une nouvelle fiche client ouvre sa commande et sa fiche est bien visible",
   const orderDialog = page.getByRole("dialog", { name: "Une nouvelle commande" });
   await expect(orderDialog).toBeVisible();
   await expect(orderDialog.getByLabel("Pour quel client ? *").locator("option:checked")).toHaveText(clientName);
+  const selectedClient = orderDialog.locator(".order-selected-client");
+  await expect(selectedClient).toContainText(clientName);
+  const orderClientColors = await selectedClient.evaluate((element) => {
+    const styles = getComputedStyle(element);
+    return { background: styles.backgroundColor, border: styles.borderLeftColor };
+  });
+  expect(orderClientColors.background).toBe("rgb(244, 247, 237)");
+  expect(orderClientColors.border).toBe("rgb(102, 132, 63)");
+
+  await page.goBack();
+  await expect(page.locator(".workspace-shell")).toBeVisible();
+  await expect(page.getByRole("dialog", { name: "Ajouter un client" })).toBeVisible();
 });
 
 test("La signature de l’auteur apparaît dans l’application mais jamais sur le reçu", async ({ page }) => {

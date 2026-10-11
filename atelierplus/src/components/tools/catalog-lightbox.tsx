@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import type { CatalogModel } from "@/lib/inspiration-catalog";
 import type { InspirationModel } from "@/lib/atelier-types";
 
@@ -36,7 +37,7 @@ export function CatalogLightbox({ entry, onClose, onStep }: Props) {
   }, [handleKey]);
 
   const title = entry.model.title;
-  return (
+  return createPortal(
     <div className="lightbox-backdrop" role="dialog" aria-modal="true" aria-label={`${title} — photo en plein écran`} onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
       <div className="lightbox">
         <div className="lightbox-stage">
@@ -64,6 +65,7 @@ export function CatalogLightbox({ entry, onClose, onStep }: Props) {
         <button type="button" className="lightbox-nav lightbox-nav-next" onClick={() => onStep(1)} aria-label="Modèle suivant">›</button>
         <button ref={closeRef} type="button" className="lightbox-close" onClick={onClose} aria-label="Fermer la vue agrandie">✕</button>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

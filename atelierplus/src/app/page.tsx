@@ -82,6 +82,7 @@ type ModalKind =
   | "options"
   | "share"
   | null;
+type AppHistoryView = { tab: AppTab; modal: ModalKind };
 type ToastState = { message: string; kind: "success" | "error" | "info" } | null;
 type InstallPromptEvent = Event & {
   prompt: () => Promise<void>;
@@ -96,6 +97,20 @@ const NAV_ITEMS: { key: AppTab; label: string; icon: string; ownerOnly?: boolean
   { key: "expenses", label: "Dépenses", icon: "wallet", ownerOnly: true },
   { key: "team", label: "Mon équipe", icon: "team", ownerOnly: true },
 ];
+const MODAL_KINDS: Exclude<ModalKind, null>[] = [
+  "client", "order", "expense", "team", "payment", "measurement", "client-details",
+  "order-details", "measurement-guide", "appointment", "fabric", "fabric-movement",
+  "options", "share",
+];
+const APP_HISTORY_KEY = "atelierplusAppView";
+
+function isAppHistoryView(state: unknown): state is { atelierplusAppView: true; tab: AppTab; modal: ModalKind } {
+  if (!state || typeof state !== "object") return false;
+  const candidate = state as Record<string, unknown>;
+  return candidate[APP_HISTORY_KEY] === true
+    && NAV_ITEMS.some((item) => item.key === candidate.tab)
+    && (candidate.modal === null || MODAL_KINDS.includes(candidate.modal as Exclude<ModalKind, null>));
+}
 
 function Icon({ name, size = 20, className = "" }: { name: string; size?: number; className?: string }) {
   const drawings: Record<string, ReactNode> = {
@@ -444,6 +459,7 @@ function OrderForm({
   const [busy, setBusy] = useState(false);
   const [selectedFabricId, setSelectedFabricId] = useState("");
   const [fabricMetres, setFabricMetres] = useState("");
+  const selectedClient = clients.find((client) => client.id === clientId);
   const selectedGarment = GARMENT_TEMPLATES.find((item) => item.value === garment) ?? GARMENT_TEMPLATES[0];
   const latestMeasurement = measurements.filter((item) => item.clientId === clientId).sort((a, b) => b.measuredAt.localeCompare(a.measuredAt))[0];
   const adjustmentCodes = [...selectedGarment.required, ...selectedGarment.optional];
@@ -472,7 +488,15 @@ function OrderForm({
 
   return (
     <form className="app-form" onSubmit={submit}>
-      {clients.length ? <Field label="Pour quel client ? *"><select value={clientId} onChange={(event) => setClientId(event.target.value)} required>{clients.map((client) => <option key={client.id} value={client.id}>{client.name}{client.phone ? ` · ${client.phone}` : ""}</option>)}</select></Field> : <div className="empty-inline"><span>Commencez par créer une fiche client.</span><button type="button" className="text-link" onClick={onCreateClient}>Créer un client <Icon name="arrow" size={15} /></button></div>}
+      {clients.length ? <>
+        {selectedClient && (
+          <div className="order-selected-client client-record-card">
+            <div className="avatar client-avatar">{initials(selectedClient.name)}</div>
+            <div><strong>{selectedClient.name}</strong><small>{selectedClient.phone ?? "Pas de téléphone renseigné"}</small></div>
+          </div>
+        )}
+        <Field label="Pour quel client ? *"><select value={clientId} onChange={(event) => setClientId(event.target.value)} required>{clients.map((client) => <option key={client.id} value={client.id}>{client.name}{client.phone ? ` · ${client.phone}` : ""}</option>)}</select></Field>
+      </> : <div className="empty-inline"><span>Commencez par créer une fiche client.</span><button type="button" className="text-link" onClick={onCreateClient}>Créer un client <Icon name="arrow" size={15} /></button></div>}
       <Field label="Vêtement à réaliser *"><select value={garment} onChange={(event) => { setGarment(event.target.value); setAdjustments({}); }} required>{GARMENT_TEMPLATES.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}</select></Field>
       <div className="form-grid form-grid-two">
         <Field label="Prix convenu *"><div className="input-suffix"><input inputMode="numeric" type="number" min="1" max="2147483647" step="1" value={totalAmount} onChange={(event) => setTotalAmount(event.target.value)} placeholder="Ex. 25 000" required /><span>F CFA</span></div></Field>
@@ -672,7 +696,7 @@ function OrderLine({
         <div className="order-garment-icon"><Icon name="shirt" size={18} /></div>
         <div>
           <b>{order.orderNumber.startsWith("LOCAL-") ? "À synchroniser" : `#${order.orderNumber}`}</b>
-          <small>{client?.name ?? "Client"}</small>
+          <small className="order-client-name">{client?.name ?? "Client"}</small>
         </div>
       </div>
       <div className="order-garment">
@@ -1063,6 +1087,9 @@ export default function HomePage() {
   const [installPrompt, setInstallPrompt] = useState<InstallPromptEvent | null>(null);
   const [tab, setTab] = useState<AppTab>("dashboard");
   const [modal, setModal] = useState<ModalKind>(null);
+  const appHistoryViewRef = useRef<AppHistoryView>({ tab, modal });
+  const appHistoryReadyRef = useRef(false);
+  const restoringAppHistoryRef = useRef(false);
   const [optionsView, setOptionsView] = useState<ToolView>("home");
   const [preselectedGarment, setPreselectedGarment] = useState<string | undefined>(undefined);
   const [preselectedClientId, setPreselectedClientId] = useState<string | undefined>(undefined);
@@ -1094,6 +1121,57 @@ export default function HomePage() {
     setToast({ message, kind });
     window.setTimeout(() => setToast((current) => current?.message === message ? null : current), 3600);
   }, []);
+
+  useEffect(() => {
+    if (phase !== "app") return;
+
+    const view = { tab, modal };
+    const currentState = window.history.state && typeof window.history.state === "object"
+      ? window.history.state as Record<string, unknown>
+      : {};
+    const appState = { ...currentState, [APP_HISTORY_KEY]: true, ...view };
+    window.history.replaceState(appState, "", window.location.href);
+    window.history.pushState(appState, "", window.location.href);
+    appHistoryViewRef.current = view;
+    appHistoryReadyRef.current = true;
+
+    function restoreAppView(event: PopStateEvent) {
+      if (!isAppHistoryView(event.state)) {
+        const current = appHistoryViewRef.current;
+        window.history.pushState({ [APP_HISTORY_KEY]: true, ...current }, "", window.location.href);
+        return;
+      }
+      const previousView = { tab: event.state.tab, modal: event.state.modal };
+      appHistoryViewRef.current = previousView;
+      restoringAppHistoryRef.current = true;
+      setTab(previousView.tab);
+      setModal(previousView.modal);
+    }
+
+    window.addEventListener("popstate", restoreAppView);
+    return () => {
+      appHistoryReadyRef.current = false;
+      window.removeEventListener("popstate", restoreAppView);
+    };
+  }, [phase]);
+
+  useEffect(() => {
+    if (phase !== "app" || !appHistoryReadyRef.current) return;
+    const nextView = { tab, modal };
+    if (restoringAppHistoryRef.current) {
+      restoringAppHistoryRef.current = false;
+      appHistoryViewRef.current = nextView;
+      return;
+    }
+    const previousView = appHistoryViewRef.current;
+    if (previousView.tab === tab && previousView.modal === modal) return;
+    appHistoryViewRef.current = nextView;
+    if (previousView.modal !== null && modal === null) {
+      window.history.back();
+      return;
+    }
+    window.history.pushState({ [APP_HISTORY_KEY]: true, ...nextView }, "", window.location.href);
+  }, [phase, tab, modal]);
 
   const syncPending = useCallback(async () => {
     if (typeof navigator === "undefined" || !navigator.onLine || syncingRef.current || !dataRef.current) return;

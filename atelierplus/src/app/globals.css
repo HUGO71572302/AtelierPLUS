@@ -255,6 +255,7 @@ button:disabled { cursor: not-allowed; opacity: .55; }
 .order-code > div:last-child, .order-garment, .order-balance { display: flex; flex-direction: column; min-width: 0; gap: 5px; }
 .order-code b, .order-garment b { overflow: hidden; color: #3c493f; font-size: 16px; font-weight: 900; text-overflow: ellipsis; white-space: nowrap; }
 .order-code small, .order-garment small, .order-balance small { overflow: hidden; color: #8a9388; font-size: 13px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.order-code .order-client-name { width: fit-content; max-width: 100%; padding: 2px 6px; border-radius: 5px; color: #405c27; background: #e5eed8; font-weight: 800; }
 .order-delivery { display: flex; flex-direction: column; gap: 5px; }
 .order-delivery small { color: #8e958c; font-size: 13px; font-weight: 700; }
 .order-delivery b { color: #4e5a4e; font-size: 14.4px; font-weight: 800; }
@@ -347,6 +348,10 @@ button:disabled { cursor: not-allowed; opacity: .55; }
 .client-record-card:focus-visible { outline: 3px solid #8bab5e; outline-offset: 2px; }
 .client-card-top { display: flex; justify-content: space-between; align-items: center; }
 .client-record-card .client-avatar { width: 39px; height: 39px; color: #405c27; background: #dce8c9; font-size: 17.6px; font-weight: 900; }
+.order-selected-client { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding: 9px 12px; border-radius: 9px; }
+.order-selected-client > div:last-child { display: flex; flex-direction: column; min-width: 0; gap: 3px; }
+.order-selected-client strong { overflow: hidden; color: #28382b; font-size: 16px; font-weight: 900; text-overflow: ellipsis; white-space: nowrap; }
+.order-selected-client small { overflow: hidden; color: #526345; font-size: 13px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
 .client-card-more { color: #a1a99d; }
 .client-record-card h3 { overflow: hidden; margin: 13px 0 5px; color: #28382b; font-family: var(--font); font-size: 21.6px; font-weight: 900; text-overflow: ellipsis; white-space: nowrap; }
 .client-phone { display: flex; align-items: center; gap: 5px; margin: 0; color: #767f74; font-size: 16px; font-weight: 700; }
