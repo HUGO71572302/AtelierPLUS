@@ -19,6 +19,7 @@ import { OptionsPanel } from "@/components/tools/options-panel";
 import type { ToolView } from "@/components/tools/options-panel";
 import type { ModelOrderDetails } from "@/lib/inspiration-catalog";
 import { INSPIRATION_CATALOG, catalogOrderDetails } from "@/lib/inspiration-catalog";
+import { InspirationView } from "@/components/tools/inspiration-view";
 import { APP_IDENTITY } from "@/lib/app-identity";
 import { TeamSecurityPanel } from "@/components/team-security-panel";
 import { AgendaView } from "@/components/agenda-view";
@@ -2018,6 +2019,22 @@ export default function HomePage() {
   function openOptions(view: ToolView = "home") { setOptionsView(view); setModal("options"); }
   function openWorkshopSettings() { if (isOwner) openOptions("settings"); }
 
+  function renderInspirationCatalog(key: string) {
+    const currentData = dataRef.current;
+    if (!currentData) return null;
+    return (
+      <InspirationView
+        key={key}
+        customModels={currentData.inspirationModels ?? []}
+        currentUserId={currentData.user.id}
+        isOwner={isOwner}
+        onSelectGarment={openOrderWithGarment}
+        onSaveCustomModel={saveInspirationModel}
+        onDeleteCustomModel={deleteInspirationModel}
+      />
+    );
+  }
+
   function renderOrderList(ordersToShow: AtelierOrder[], emptyTitle: string, emptyDescription: string) {
     if (!ordersToShow.length) return <EmptyState icon="orders" title={emptyTitle} description={emptyDescription} action={<button className="button button-light" type="button" onClick={openOrder}><Icon name="plus" size={16} />Créer une commande</button>} />;
     return (
@@ -2408,9 +2425,13 @@ export default function HomePage() {
                 </section>
               </aside>
             </div>
+            <section aria-label="Catalogue d’inspiration">
+              {renderInspirationCatalog("dashboard-inspiration")}
+            </section>
           </>}
 
           {tab === "orders" && (
+            <>
             <section className="panel list-page-panel">
               <div className="list-toolbar">
                 <div>
@@ -2454,6 +2475,10 @@ export default function HomePage() {
               </div>
               {renderOrderList(visibleOrders, "Aucune commande trouvée", query || onlyDue || onlyUrgent ? "Modifiez vos filtres ou effectuez une autre recherche." : "Commencez par ajouter votre prochaine création au carnet.")}
             </section>
+            <section aria-label="Catalogue d’inspiration">
+              {renderInspirationCatalog("orders-inspiration")}
+            </section>
+            </>
           )}
 
           {tab === "agenda" && (
