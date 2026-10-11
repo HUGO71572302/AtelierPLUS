@@ -225,7 +225,14 @@ test("Le tableau de bord expose des raccourcis de priorités actionnables", asyn
     await page.locator(".nav-link").filter({ hasText: "Vue d’ensemble" }).click();
   }
   await page.locator(".priority-chip").filter({ hasText: "en retard" }).click();
-  await expect(page.locator(".order-line").first()).toBeVisible();
+  const orderCard = page.locator(".order-record-card").first();
+  await expect(orderCard).toBeVisible();
+  const orderColors = await orderCard.evaluate((element) => {
+    const styles = getComputedStyle(element);
+    return { background: styles.backgroundColor, border: styles.borderLeftColor };
+  });
+  expect(orderColors.background).toBe("rgb(244, 247, 237)");
+  expect(orderColors.border).toBe("rgb(102, 132, 63)");
 });
 
 test("Une nouvelle fiche client ouvre sa commande et sa fiche est bien visible", async ({ page }) => {

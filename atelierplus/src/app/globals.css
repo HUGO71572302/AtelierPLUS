@@ -247,9 +247,9 @@ button:disabled { cursor: not-allowed; opacity: .55; }
 .panel-heading > .text-link { flex: 0 0 auto; font-size: 14.4px; }
 .panel-body { padding: 0 14px; }
 .orders-list { display: flex; flex-direction: column; }
-.order-line { display: grid; grid-template-columns: minmax(115px, 1.2fr) minmax(90px, .95fr) minmax(65px, .62fr) minmax(104px, .83fr) minmax(105px, .95fr) auto; align-items: center; gap: 10px; min-height: 70px; padding: 10px 7px; border-bottom: 1px solid #eff1ec; cursor: pointer; transition: background .12s; }
-.order-line:hover { background: #fafcf6; }
-.order-line:last-child { border-bottom: 0; }
+.order-line { display: grid; grid-template-columns: minmax(115px, 1.2fr) minmax(90px, .95fr) minmax(65px, .62fr) minmax(104px, .83fr) minmax(105px, .95fr) auto; align-items: center; gap: 10px; min-height: 70px; padding: 10px 10px; border: 1px solid #c6d5ad; border-left: 5px solid #66843f; border-radius: 9px; background: #f4f7ed; cursor: pointer; transition: background .12s, border-color .12s, box-shadow .12s; }
+.order-line:hover { border-color: #a8bd85; border-left-color: #4f6e2f; background: #edf3e3; box-shadow: 0 5px 14px rgba(55, 76, 39, .1); }
+.order-line:last-child { border-bottom: 1px solid #c6d5ad; }
 .order-code { display: flex; align-items: center; gap: 9px; min-width: 0; }
 .order-garment-icon { width: 32px; height: 32px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 9px; color: #738b4e; background: #f0f5e7; }
 .order-code > div:last-child, .order-garment, .order-balance { display: flex; flex-direction: column; min-width: 0; gap: 5px; }

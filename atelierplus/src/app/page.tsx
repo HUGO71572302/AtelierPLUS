@@ -681,7 +681,7 @@ function OrderLine({
 }) {
   return (
     <div
-      className="order-line"
+      className="order-line order-record-card"
       onClick={() => onOpenDetails(order)}
       role="button"
       tabIndex={0}
