@@ -36,28 +36,9 @@ export function CatalogLightbox({ entry, onClose, onStep }: Props) {
   }, [handleKey]);
 
   const title = entry.model.title;
-  const subtitle = entry.kind === "catalog"
-    ? `${entry.model.audience} · ${entry.model.occasion} · ${entry.model.level}`
-    : `Votre atelier · ${entry.model.garment}`;
-  const advice = entry.kind === "catalog" ? entry.model.advice : entry.model.advice;
-  const notes = entry.kind === "catalog" ? entry.model.fabric : null;
-
   return (
-    <div className="lightbox-backdrop" role="dialog" aria-modal="true" aria-label={`${title} — vue agrandie`} onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
+    <div className="lightbox-backdrop" role="dialog" aria-modal="true" aria-label={`${title} — photo en plein écran`} onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
       <div className="lightbox">
-        <header className="lightbox-head">
-          <div className="lightbox-titles">
-            <p className="lightbox-kicker">{entry.kind === "catalog" ? "Sélection AtelierPLUS" : "Votre atelier"}</p>
-            <h3 className="lightbox-title">{title}</h3>
-            <p className="lightbox-subtitle">{subtitle}</p>
-          </div>
-          <div className="lightbox-head-actions">
-            <button type="button" className="lightbox-nav" onClick={() => onStep(-1)} aria-label="Modèle précédent">‹</button>
-            <button type="button" className="lightbox-nav" onClick={() => onStep(1)} aria-label="Modèle suivant">›</button>
-            <button ref={closeRef} type="button" className="lightbox-close" onClick={onClose} aria-label="Fermer la vue agrandie">✕</button>
-          </div>
-        </header>
-
         <div className="lightbox-stage">
           {entry.kind === "catalog" ? (
             <Image
@@ -79,22 +60,9 @@ export function CatalogLightbox({ entry, onClose, onStep }: Props) {
           )}
         </div>
 
-        <footer className="lightbox-foot">
-          <div className="lightbox-facts">
-            {notes && <div><b>Tissu conseillé</b><span>{notes}</span></div>}
-            {entry.kind === "catalog" && <div><b>Niveau de confection</b><span>{entry.model.level}</span></div>}
-            {(advice || entry.kind === "personal") && (
-              <div><b>{entry.kind === "catalog" ? "Conseil d’atelier" : "Note du modèle"}</b><span>{advice || entry.model.description || "Aucune note pour cette fiche."}</span></div>
-            )}
-          </div>
-          {entry.kind === "catalog" && entry.model.reference && (
-            <a className="lightbox-source" href={entry.model.reference.url} target="_blank" rel="noopener noreferrer">
-              <span className="catalog-source-mark" aria-hidden="true">P</span>
-              {entry.model.reference.title}
-            </a>
-          )}
-          <p className="lightbox-help">Flèches ← → pour changer de modèle · Échap pour fermer</p>
-        </footer>
+        <button type="button" className="lightbox-nav lightbox-nav-previous" onClick={() => onStep(-1)} aria-label="Modèle précédent">‹</button>
+        <button type="button" className="lightbox-nav lightbox-nav-next" onClick={() => onStep(1)} aria-label="Modèle suivant">›</button>
+        <button ref={closeRef} type="button" className="lightbox-close" onClick={onClose} aria-label="Fermer la vue agrandie">✕</button>
       </div>
     </div>
   );

@@ -77,8 +77,12 @@ async function openInspiration(page: Page) {
     await page.getByRole("menuitem", { name: "Plus d’options", exact: true }).click();
   }
   await page.locator(".tool-tile").filter({ has: page.locator("strong", { hasText: "Inspiration" }) }).click();
-  await expect(page.locator(".inspiration-catalog")).toBeVisible();
+  await expect(page.locator(".modal-card .inspiration-catalog")).toBeVisible();
   await expect(page.locator(".section-error")).toHaveCount(0);
+}
+
+function inspirationCatalog(page: Page) {
+  return page.locator(".modal-card .inspiration-catalog");
 }
 
 test.beforeEach(async ({ page }) => {
@@ -122,10 +126,11 @@ test("Le catalogue contient 16 modèles illustrés, 12 nouveautés et les source
   expect(new Set(INSPIRATION_CATALOG.map((item) => item.id)).size).toBe(16);
   expect(INSPIRATION_CATALOG.filter((item) => item.isNew)).toHaveLength(12);
   expect(new Set(INSPIRATION_CATALOG.map((item) => item.garment)).size).toBe(7);
-  await expect(page.locator(".catalog-card")).toHaveCount(16);
-  await expect(page.locator(".catalog-new")).toHaveCount(12);
-  await expect(page.locator(".catalog-source")).toHaveCount(12);
-  await expect(page.locator(".catalog-provenance")).toContainText("illustrations IA ou des croquis originaux");
+  const catalog = inspirationCatalog(page);
+  await expect(catalog.locator(".catalog-card")).toHaveCount(16);
+  await expect(catalog.locator(".catalog-new")).toHaveCount(12);
+  await expect(catalog.locator(".catalog-source")).toHaveCount(12);
+  await expect(catalog.locator(".catalog-provenance")).toContainText("illustrations IA ou des croquis originaux");
 
   const codes = new Set(MEASUREMENT_CATALOG.map((item) => item.code));
   const garments = new Set(GARMENT_TEMPLATES.map((item) => item.value));
@@ -133,7 +138,7 @@ test("Le catalogue contient 16 modèles illustrés, 12 nouveautés et les source
     expect(garments.has(item.garment)).toBe(true);
     expect(item.codes.every((code) => codes.has(code))).toBe(true);
     await access(`public${item.image}`);
-    const card = page.locator(`[data-catalog-id="${item.id}"]`);
+    const card = catalog.locator(`[data-catalog-id="${item.id}"]`);
     const image = card.locator("img");
     await image.scrollIntoViewIfNeeded();
     await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0)).toBe(true);
@@ -152,24 +157,26 @@ test("Le catalogue contient 16 modèles illustrés, 12 nouveautés et les source
 
 
 test("La visionneuse agrandit une image, se ferme et navigue entre les modèles", async ({ page }) => {
-  const card = page.locator(".catalog-card").filter({ hasText: "Robe sirène indigo" });
+  const catalog = inspirationCatalog(page);
+  const card = catalog.locator(".catalog-card").filter({ hasText: "Robe sirène indigo" });
   await card.locator(".catalog-cover-button").click();
   const viewer = page.locator(".lightbox-backdrop");
   await expect(viewer).toBeVisible();
-  await expect(viewer.locator(".lightbox-title")).toHaveText("Robe sirène indigo");
+  await expect(viewer).toHaveAttribute("aria-label", "Robe sirène indigo — photo en plein écran");
   const stage = viewer.locator(".lightbox-stage");
   await expect(stage.locator("img")).toBeVisible();
+  await expect(viewer.locator(".lightbox-head, .lightbox-foot, .lightbox-facts")).toHaveCount(0);
   const size = await stage.locator("img").boundingBox();
   expect(size!.height).toBeGreaterThan(300);
 
   await viewer.getByRole("button", { name: "Modèle suivant", exact: true }).click();
-  await expect(viewer.locator(".lightbox-title")).toHaveText("Robe portefeuille en wax");
+  await expect(viewer).toHaveAttribute("aria-label", "Robe portefeuille en wax — photo en plein écran");
   await viewer.getByRole("button", { name: "Modèle précédent", exact: true }).click();
-  await expect(viewer.locator(".lightbox-title")).toHaveText("Robe sirène indigo");
+  await expect(viewer).toHaveAttribute("aria-label", "Robe sirène indigo — photo en plein écran");
 
   await page.keyboard.press("Escape");
   await expect(viewer).toHaveCount(0);
-  await expect(page.locator(".catalog-card")).toHaveCount(16);
+  await expect(catalog.locator(".catalog-card")).toHaveCount(16);
   await expect(page.locator(".modal-card")).toBeVisible();
 });
 
@@ -218,6 +225,32 @@ test("Le tableau de bord expose des raccourcis de priorités actionnables", asyn
   await expect(page.locator(".order-line").first()).toBeVisible();
 });
 
+test("Une nouvelle fiche client ouvre sa commande et sa fiche est bien visible", async ({ page }) => {
+  await page.locator(".modal-backdrop").last().getByRole("button", { name: "Fermer", exact: true }).click();
+  const navigation = page.viewportSize()!.width <= 760
+    ? page.locator(".mobile-bottom-nav")
+    : page.locator(".side-navigation");
+  await navigation.getByRole("button", { name: /Clients/ }).click();
+
+  const savedClientCard = page.locator(".client-record-card").first();
+  await expect(savedClientCard).toBeVisible();
+  const cardColors = await savedClientCard.evaluate((element) => {
+    const styles = getComputedStyle(element);
+    return { background: styles.backgroundColor, border: styles.borderLeftColor };
+  });
+  expect(cardColors.background).toBe("rgb(244, 247, 237)");
+  expect(cardColors.border).toBe("rgb(102, 132, 63)");
+
+  await page.locator(".client-add-card").click();
+  const clientName = `Client commande ${randomUUID().slice(0, 6)}`;
+  const clientDialog = page.getByRole("dialog", { name: "Ajouter un client" });
+  await clientDialog.getByLabel("Nom du client *").fill(clientName);
+  await clientDialog.getByRole("button", { name: "Enregistrer le client" }).click();
+
+  const orderDialog = page.getByRole("dialog", { name: "Une nouvelle commande" });
+  await expect(orderDialog).toBeVisible();
+  await expect(orderDialog.getByLabel("Pour quel client ? *").locator("option:checked")).toHaveText(clientName);
+});
 
 test("La signature de l’auteur apparaît dans l’application mais jamais sur le reçu", async ({ page }) => {
   // The beforeEach opens the Inspiration dialog: close it to reach the shell.
@@ -255,30 +288,31 @@ test("La signature de l’auteur apparaît dans l’application mais jamais sur 
 });
 
 test("Les filtres et la recherche sans accents trouvent les bons modèles", async ({ page }) => {
-  const search = page.getByRole("searchbox", { name: "Rechercher un modèle" });
+  const catalog = inspirationCatalog(page);
+  const search = catalog.getByRole("searchbox", { name: "Rechercher un modèle" });
   await search.fill("sirene");
-  await expect(page.locator(".catalog-card")).toHaveCount(1);
-  await expect(page.locator(".catalog-card")).toContainText("Robe sirène indigo");
+  await expect(catalog.locator(".catalog-card")).toHaveCount(1);
+  await expect(catalog.locator(".catalog-card")).toContainText("Robe sirène indigo");
   await search.fill("");
   for (const family of CATALOG_FAMILIES.filter((item) => item.value !== "all")) {
-    await page.locator(".catalog-filter").filter({ hasText: family.label }).click();
-    await expect(page.locator(".catalog-card")).toHaveCount(INSPIRATION_CATALOG.filter((item) => item.family === family.value).length);
+    await catalog.locator(".catalog-filter").filter({ hasText: family.label }).click();
+    await expect(catalog.locator(".catalog-card")).toHaveCount(INSPIRATION_CATALOG.filter((item) => item.family === family.value).length);
   }
-  await page.locator(".catalog-filter").filter({ hasText: "Tous les modèles" }).click();
-  await page.getByRole("combobox", { name: "Occasion du modèle" }).selectOption("Travail");
-  await expect(page.locator(".catalog-card")).toHaveCount(3);
-  await page.getByRole("combobox", { name: "Occasion du modèle" }).selectOption("all");
+  await catalog.locator(".catalog-filter").filter({ hasText: "Tous les modèles" }).click();
+  await catalog.getByRole("combobox", { name: "Occasion du modèle" }).selectOption("Travail");
+  await expect(catalog.locator(".catalog-card")).toHaveCount(3);
+  await catalog.getByRole("combobox", { name: "Occasion du modèle" }).selectOption("all");
   await search.fill("zzzz-inexistant");
-  await expect(page.locator(".catalog-card")).toHaveCount(0);
-  await expect(page.getByRole("heading", { name: "Aucun modèle avec ces filtres" })).toBeVisible();
-  await page.getByRole("button", { name: "Réinitialiser les filtres", exact: true }).click();
-  await expect(page.locator(".catalog-card")).toHaveCount(16);
+  await expect(catalog.locator(".catalog-card")).toHaveCount(0);
+  await expect(catalog.getByRole("heading", { name: "Aucun modèle avec ces filtres" })).toBeVisible();
+  await catalog.getByRole("button", { name: "Réinitialiser les filtres", exact: true }).click();
+  await expect(catalog.locator(".catalog-card")).toHaveCount(16);
 });
 
 test("Un modèle choisi préremplit une commande et ses notes sont conservées en base", async ({ page, request }) => {
   const item = INSPIRATION_CATALOG.find((entry) => entry.id === "pantalon-palazzo")!;
   const preset = catalogOrderDetails(item);
-  await page.getByRole("article", { name: item.title, exact: true }).getByRole("button", { name: "Créer cette commande", exact: true }).click();
+  await inspirationCatalog(page).getByRole("article", { name: item.title, exact: true }).getByRole("button", { name: "Créer cette commande", exact: true }).click();
   const dialog = page.getByRole("dialog", { name: "Une nouvelle commande", exact: true });
   await expect(dialog).toBeVisible();
   await expect(dialog.getByLabel("Vêtement à réaliser", { exact: false })).toHaveValue("pantalon");
@@ -299,16 +333,17 @@ test("Un modèle choisi préremplit une commande et ses notes sont conservées e
 
 test("Le formulaire personnel continue d’ajouter une photo et une fiche dans l’atelier", async ({ page, request }) => {
   const title = `Création personnelle ${randomUUID().slice(0, 6)}`;
-  await page.getByRole("button", { name: "+ Ajouter mon modèle", exact: true }).click();
+  const catalog = inspirationCatalog(page);
+  await catalog.getByRole("button", { name: "+ Ajouter mon modèle", exact: true }).click();
   const form = page.locator(".inspiration-form");
-  await form.locator('input[type="file"]').setInputFiles("public/images/catalogue-robe-portefeuille.webp");
+  await form.locator('input[type="file"]').setInputFiles("public/images/robe-portefeuille-wax.jpg");
   await expect(form.getByRole("img", { name: "Aperçu du modèle", exact: true })).toBeVisible();
   await form.getByLabel("Nom du modèle", { exact: false }).fill(title);
   await form.getByLabel("Type de vêtement", { exact: false }).selectOption("robe_femme");
   await form.getByLabel("Description", { exact: true }).fill("Robe portefeuille personnalisée à l’atelier.");
   await form.getByRole("button", { name: "LR", exact: true }).click();
   await form.getByRole("button", { name: "Ajouter au catalogue", exact: true }).click();
-  await expect(page.locator(".inspiration-custom-card").filter({ hasText: title })).toBeVisible();
+  await expect(catalog.locator(".inspiration-custom-card").filter({ hasText: title })).toBeVisible();
   await expect.poll(async () => {
     const response = await request.get("/api/data", { headers: { Authorization: `Bearer ${token}` } });
     const data = await response.json() as AtelierData;
@@ -317,6 +352,7 @@ test("Le formulaire personnel continue d’ajouter une photo et une fiche dans l
   await page.reload();
   await expect(page.locator(".workspace-shell")).toBeVisible();
   await openInspiration(page);
-  await expect(page.locator(".inspiration-custom-card").filter({ hasText: title })).toBeVisible();
-  await expect(page.locator(".catalog-card")).toHaveCount(INSPIRATION_CATALOG.length);
+  const catalogAfterReload = inspirationCatalog(page);
+  await expect(catalogAfterReload.locator(".inspiration-custom-card").filter({ hasText: title })).toBeVisible();
+  await expect(catalogAfterReload.locator(".catalog-card")).toHaveCount(INSPIRATION_CATALOG.length);
 });

@@ -414,6 +414,7 @@ function OrderForm({
   onCreateClient,
   onOpenGuide,
   initialGarment,
+  initialClientId,
   initialModelDetails,
   fabrics,
   showFabricUsage,
@@ -425,11 +426,12 @@ function OrderForm({
   onCreateClient: () => void;
   onOpenGuide?: () => void;
   initialGarment?: string;
+  initialClientId?: string;
   initialModelDetails?: ModelOrderDetails;
   fabrics?: AtelierData["fabrics"];
   showFabricUsage?: boolean;
 }) {
-  const [clientId, setClientId] = useState(clients[0]?.id ?? "");
+  const [clientId, setClientId] = useState(() => clients.find((client) => client.id === initialClientId)?.id ?? clients[0]?.id ?? "");
   const [garment, setGarment] = useState<string>(initialGarment ?? GARMENT_TEMPLATES[0].value);
   const [model, setModel] = useState(initialModelDetails?.model ?? "");
   const [fabricSource, setFabricSource] = useState("client");
@@ -1063,6 +1065,7 @@ export default function HomePage() {
   const [modal, setModal] = useState<ModalKind>(null);
   const [optionsView, setOptionsView] = useState<ToolView>("home");
   const [preselectedGarment, setPreselectedGarment] = useState<string | undefined>(undefined);
+  const [preselectedClientId, setPreselectedClientId] = useState<string | undefined>(undefined);
   const [preselectedModelDetails, setPreselectedModelDetails] = useState<ModelOrderDetails | undefined>(undefined);
   const [search, setSearch] = useState("");
   const [orderFilter, setOrderFilter] = useState<"all" | OrderStatus>("all");
@@ -1352,8 +1355,11 @@ export default function HomePage() {
       measurements: measurement ? [ { ...measurement, createdBy: current.user.id }, ...current.measurements ] : current.measurements,
     }));
     if (!saved) return;
-    setModal(null);
-    showToast(values && Object.keys(values).length ? "Client et mensurations enregistrés." : "Fiche client enregistrée.");
+    setPreselectedGarment(undefined);
+    setPreselectedModelDetails(undefined);
+    setPreselectedClientId(draft.id);
+    setModal("order");
+    showToast(values && Object.keys(values).length ? "Client et mensurations enregistrés. Préparez sa commande." : "Client enregistré. Préparez sa commande.");
   }
 
   async function saveMeasurement(values: MeasurementValues) {
@@ -2005,7 +2011,7 @@ export default function HomePage() {
   const ownerCollections = monthPayments.reduce((sum, payment) => sum + payment.amount, 0);
   const currentMonthName = new Intl.DateTimeFormat("fr-FR", { month: "long" }).format(dateNow);
 
-  function openOrder() { setPreselectedGarment(undefined); setPreselectedModelDetails(undefined); setModal("order"); }
+  function openOrder() { setPreselectedGarment(undefined); setPreselectedClientId(undefined); setPreselectedModelDetails(undefined); setModal("order"); }
   function openClientDetails(clientId: string) { setSelectedClientId(clientId); setModal("client-details"); }
   function openOrderDetails(order: AtelierOrder) { setSelectedOrderId(order.id); setModal("order-details"); }
   function openPayment(order: AtelierOrder) { setSelectedOrderId(order.id); setModal("payment"); }
@@ -2013,6 +2019,7 @@ export default function HomePage() {
   function openGuide() { setModal("measurement-guide"); }
   function openOrderWithGarment(garmentValue: string, details?: ModelOrderDetails) {
     setPreselectedGarment(garmentValue);
+    setPreselectedClientId(undefined);
     setPreselectedModelDetails(details);
     setModal("order");
   }
@@ -2525,7 +2532,7 @@ export default function HomePage() {
                     const orderCount = data.orders.filter((order) => order.clientId === client.id).length;
                     const due = data.orders.filter((order) => order.clientId === client.id && order.totalAmount !== null).reduce((sum, order) => sum + Math.max(0, (order.totalAmount ?? 0) - (paymentTotals.get(order.id) ?? 0)), 0);
                     return (
-                      <button type="button" className="client-card" key={client.id} onClick={() => openClientDetails(client.id)}>
+                      <button type="button" className="client-card client-record-card" key={client.id} onClick={() => openClientDetails(client.id)}>
                         <div className="client-card-top">
                           <div className="avatar client-avatar">{initials(client.name)}</div>
                           <span className="client-card-more"><Icon name="dots" size={18} /></span>
@@ -2674,7 +2681,7 @@ export default function HomePage() {
       <QuickLauncher items={launcherItems} open={launcherOpen} onClose={() => setLauncherOpen(false)} />
 
       {modal === "client" && <Modal title="Ajouter un client" subtitle="Une fiche courte, que vous compléterez à votre rythme." onClose={() => setModal(null)} wide><ClientForm onSave={saveClient} onCancel={() => setModal(null)} onOpenGuide={openGuide} /></Modal>}
-      {modal === "order" && <Modal title="Une nouvelle commande" subtitle="Quelques détails suffisent pour commencer." onClose={() => setModal(null)} wide><OrderForm clients={data.clients} measurements={data.measurements} onSave={saveOrder} onCancel={() => setModal(null)} onCreateClient={startClientFromOrder} onOpenGuide={openGuide} initialGarment={preselectedGarment} initialModelDetails={preselectedModelDetails} fabrics={data.fabrics ?? []} showFabricUsage={Boolean(isOwner)} /></Modal>}
+      {modal === "order" && <Modal title="Une nouvelle commande" subtitle="Quelques détails suffisent pour commencer." onClose={() => setModal(null)} wide><OrderForm clients={data.clients} measurements={data.measurements} onSave={saveOrder} onCancel={() => setModal(null)} onCreateClient={startClientFromOrder} onOpenGuide={openGuide} initialGarment={preselectedGarment} initialClientId={preselectedClientId} initialModelDetails={preselectedModelDetails} fabrics={data.fabrics ?? []} showFabricUsage={Boolean(isOwner)} /></Modal>}
       {modal === "expense" && isOwner && <Modal title="Ajouter une dépense" subtitle="Un tissu, un trajet, une petite fourniture…" onClose={() => setModal(null)}><ExpenseForm orders={data.orders} onSave={saveExpense} onCancel={() => setModal(null)} /></Modal>}
       {modal === "team" && isOwner && <Modal title="Ajouter un membre" subtitle="Un compte à son nom, avec les accès utiles à son travail." onClose={() => setModal(null)}><TeamForm onSave={saveTeamMember} onCancel={() => setModal(null)} online={online} /></Modal>}
       {modal === "payment" && selectedOrder && <Modal title="Saisir un paiement" subtitle="Les acomptes restent liés à cette commande." onClose={() => setModal(null)}><PaymentForm order={selectedOrder} balance={Math.max(0, (selectedOrder.totalAmount ?? 0) - (paymentTotals.get(selectedOrder.id) ?? 0))} onSave={savePayment} onCancel={() => setModal(null)} /></Modal>}

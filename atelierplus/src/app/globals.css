@@ -342,10 +342,13 @@ button:disabled { cursor: not-allowed; opacity: .55; }
 .client-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
 .client-card { position: relative; min-width: 0; min-height: 177px; padding: 16px 15px 13px; border: 1px solid #e9ece4; border-radius: 10px; background: #fff; text-align: left; cursor: pointer; transition: border-color .16s, box-shadow .16s, transform .16s; }
 .client-card:hover { transform: translateY(-2px); border-color: #dce6ce; box-shadow: 0 9px 23px rgba(42, 55, 42, .055); }
+.client-record-card { border: 1px solid #c6d5ad; border-left: 5px solid #66843f; background: #f4f7ed; }
+.client-record-card:hover { border-color: #a8bd85; border-left-color: #4f6e2f; background: #edf3e3; box-shadow: 0 8px 20px rgba(55, 76, 39, .12); }
+.client-record-card:focus-visible { outline: 3px solid #8bab5e; outline-offset: 2px; }
 .client-card-top { display: flex; justify-content: space-between; align-items: center; }
-.client-avatar { width: 39px; height: 39px; color: #587336; background: #ebf1df; font-size: 17.6px; font-weight: 900; }
+.client-record-card .client-avatar { width: 39px; height: 39px; color: #405c27; background: #dce8c9; font-size: 17.6px; font-weight: 900; }
 .client-card-more { color: #a1a99d; }
-.client-card h3 { overflow: hidden; margin: 13px 0 5px; color: #324036; font-family: var(--font); font-size: 21.6px; font-weight: 900; text-overflow: ellipsis; white-space: nowrap; }
+.client-record-card h3 { overflow: hidden; margin: 13px 0 5px; color: #28382b; font-family: var(--font); font-size: 21.6px; font-weight: 900; text-overflow: ellipsis; white-space: nowrap; }
 .client-phone { display: flex; align-items: center; gap: 5px; margin: 0; color: #767f74; font-size: 16px; font-weight: 700; }
 .client-phone svg { color: #8fa071; }
 .client-phone > span { color: #9ba399; }
