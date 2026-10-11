@@ -474,27 +474,13 @@
   .print-receipt-text { font-size: 14px; }
 }
 
-/* ═══════════ Guide humain réel : face / dos ═══════════ */
+/* ═══════════ Infographie complète du guide de mensuration ═══════════ */
 .guide-human-card { display: flex; flex-direction: column; gap: 12px; padding: 16px; border: 1.5px solid #e7dfd3; border-radius: 18px; background: #fdfbf7; }
 .human-guide-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
 .human-guide-header b { display: block; color: #2b1c12; font-size: 18px; font-weight: 900; }
 .human-guide-header small { display: block; margin-top: 3px; color: #7c6450; font-size: 14px; font-weight: 700; }
-.guide-view-toggle { display: inline-flex; gap: 3px; padding: 3px; border: 1px solid #e5d8c7; border-radius: 11px; background: #fff; }
-.guide-view-toggle button { min-height: 34px; padding: 0 9px; border: 0; border-radius: 8px; color: #7c6450; background: transparent; font-size: 13px; font-weight: 850; cursor: pointer; }
-.guide-view-toggle .guide-view-active { color: #fff; background: #7c3a1e; }
-.human-guide-photo { position: relative; overflow: hidden; aspect-ratio: 2 / 3; border: 1px solid #ece3d7; border-radius: 14px; background: #f1e8de; }
-/* The training image is portrait 2:3: both bodies stay fully visible in the default view. */
-.human-guide-photo > img { object-fit: cover; object-position: center; transition: transform .3s ease, opacity .2s ease; }
-.human-guide-front > img { object-position: 25% center; transform: scale(1.55); }
-.human-guide-back > img { object-position: 75% center; transform: scale(1.55); }
-.guide-side-label { position: absolute; top: 12px; padding: 5px 8px; border-radius: 7px; background: rgba(43, 28, 18, .75); color: #fff; font-size: 11px; font-weight: 900; letter-spacing: .8px; pointer-events: none; }
-.guide-side-front { left: 12px; }
-.guide-side-back { right: 12px; }
-.human-guide-front .guide-side-back, .human-guide-back .guide-side-front { display: none; }
-.human-marker { position: absolute; z-index: 3; display: grid; place-items: center; width: 32px; height: 32px; margin: -16px 0 0 -16px; border: 2px solid #fff; border-radius: 50%; color: #fff; background: #9c4c29; box-shadow: 0 2px 8px rgba(43, 28, 18, .35); font-size: 10px; font-weight: 900; cursor: pointer; transition: transform .15s ease, background .15s ease, box-shadow .15s ease; }
-.human-marker:hover { transform: scale(1.12); background: #6b2f14; }
-.human-marker-active { z-index: 4; background: #2f4438; box-shadow: 0 0 0 6px rgba(201, 234, 123, .7), 0 3px 10px rgba(43, 28, 18, .35); transform: scale(1.2); }
-.human-marker-caption { position: absolute; z-index: 4; max-width: 100px; padding: 4px 7px; border-radius: 7px; background: rgba(43, 28, 18, .86); color: #fff; font-size: 11px; font-weight: 800; line-height: 1.2; text-align: center; transform: translate(-50%, calc(-100% - 20px)); pointer-events: none; }
+.measurement-infographic { overflow: hidden; border: 1px solid #ece3d7; border-radius: 14px; background: #fff; }
+.measurement-infographic > img { display: block; width: 100%; height: auto; }
 .active-measure-human { margin-top: 0; }
 .guide-accuracy-note { margin: 0; padding: 11px 12px; border-radius: 10px; background: #f5ede3; color: #5c4534; font-size: 14px; font-weight: 700; line-height: 1.5; }
 .guide-accuracy-note b { color: #2b1c12; }
@@ -528,9 +514,6 @@
 .inspiration-placeholder span { font-size: 14px; font-weight: 800; }
 
 @media (max-width: 620px) {
-  .human-guide-photo { aspect-ratio: 1 / 1.28; }
-  .human-marker { width: 29px; height: 29px; margin: -14.5px 0 0 -14.5px; font-size: 9px; }
-  .human-marker-caption { display: none; }
   .human-guide-header { flex-direction: column; }
   .inspiration-toolbar .button { width: 100%; }
   .inspiration-actions { flex-direction: column; }

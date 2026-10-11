@@ -1,5 +1,5 @@
 // UI-only cache. Updating it must never delete IndexedDB workspace data or sessions.
-const CACHE_NAME = "atelierplus-shell-v8-catalogue-contrast";
+const CACHE_NAME = "atelierplus-shell-v9-measurement-guide";
 const SHELL_URLS = ["/", "/inscription", "/mot-de-passe-oublie", "/manifest.json", "/icon.svg", "/images/auteur.jpg"];
 
 self.addEventListener("install", (event) => {
